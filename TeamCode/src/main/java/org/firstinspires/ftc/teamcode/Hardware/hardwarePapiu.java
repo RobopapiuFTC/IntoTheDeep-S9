@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 public class hardwarePapiu {
 
@@ -13,6 +14,7 @@ public class hardwarePapiu {
     public DcMotorEx leftBack;
     public DcMotorEx rightFront;
     public DcMotorEx rightBack;
+    public CRServo ServoBrat;
 
 
     public hardwarePapiu(OpMode opmode) {myOpMode = opmode;}
@@ -25,6 +27,7 @@ public class hardwarePapiu {
         leftBack = myOpMode.hardwareMap.get(DcMotorEx.class, "leftBack");
         rightFront = myOpMode.hardwareMap.get(DcMotorEx.class, "rightFront");
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, "rightBack");
+        ServoBrat = myOpMode.hardwareMap.get(CRServo.class, "brat");
     }
     public void movement(Gamepad gamepad1){
 
@@ -44,5 +47,13 @@ public class hardwarePapiu {
         rightFront.setPower(frontRightPower);
         rightBack.setPower(backRightPower);
 
+    }
+    public void miscareservo(Gamepad gamepad1, CRServo servo){
+        if(gamepad1.x){
+            servo.setPower(0.5);
+        }
+        if(gamepad1.b){
+            servo.setPower(-0.5);
+        }
     }
 }
