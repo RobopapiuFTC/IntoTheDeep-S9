@@ -19,7 +19,7 @@ public class hardwarePapiu {
     public DcMotorEx Glisiera; //slot 2 pe Control hub 0-1-2-3 order
     public CRServo ServoBrat;
 
-    public static double down=0,auto=2,low=5,middle=15,up=25;
+    public static double down=0,little=1,low=5,middle=15,up=25;
 
 
     public hardwarePapiu(OpMode opmode) {myOpMode = opmode;}
@@ -92,8 +92,8 @@ public class hardwarePapiu {
             Glisiera.setTargetPosition(-ticks+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.1);
-        } else if(Objects.equals(direction, "auto")){
-            Glisiera.setTargetPosition((int)(auto * VariableStorage.TICKS_PER_CM_Z)+a);
+        } else if(Objects.equals(direction, "little")){
+            Glisiera.setTargetPosition((int)(little * VariableStorage.TICKS_PER_CM_Z)+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.1);
         }
