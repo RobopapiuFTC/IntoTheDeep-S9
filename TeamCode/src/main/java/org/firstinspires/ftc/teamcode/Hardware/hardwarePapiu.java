@@ -60,14 +60,14 @@ public class hardwarePapiu {
         rightBack.setPower(backRightPower);
 
     }
-    public void miscareservo(Gamepad gamepad1, CRServo servo){
+    public void miscareservo(Gamepad gamepad1){
         if(gamepad1.x){
-            servo.setPower(1);
+            ServoBrat.setPower(1);
         }
         if(gamepad1.b){
-            servo.setPower(-1);
+            ServoBrat.setPower(-1);
         }
-        if(!gamepad1.x && !gamepad1.b)servo.setPower(0);
+        if(!gamepad1.x && !gamepad1.b)ServoBrat.setPower(0);
     }
     public void miscareglisiera(String direction, DcMotorEx Glisiera){
 
@@ -115,4 +115,25 @@ public class hardwarePapiu {
         }
 
     }
+    /** public void glisieragamepad(Gamepad gamepad1,DcMotorEx Glisiera){
+        String[] inaltime = {"down", "little", "low", "middle", "high"};
+        int i=0;
+        while(i<=inaltime.length){
+                if(gamepad1.dpad_left) {
+                    if(i<inaltime.length-1)i++;
+                    if(i<inaltime.length)miscareglisiera(inaltime[i], Glisiera);
+
+                }
+                if(gamepad1.dpad_right) {
+                    if(i>0)i--;
+                    if(i<inaltime.length)miscareglisiera(inaltime[i], Glisiera);
+
+                }
+                if(gamepad1.dpad_down){
+                    i=0;
+                    miscareglisiera(inaltime[i], Glisiera);
+                }
+        }
+    }
+    */
 }
