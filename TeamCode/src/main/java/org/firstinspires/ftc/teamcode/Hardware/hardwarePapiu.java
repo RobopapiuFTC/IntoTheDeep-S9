@@ -23,7 +23,7 @@ public class hardwarePapiu {
     public Servo Cleste;
 
     public static double down=0,little=1,low=5,middle=15,up=25;
-    boolean isOpen=false;
+    boolean isOpenR=false, isOpen=false;
 
 
     public hardwarePapiu(OpMode opmode) {myOpMode = opmode;}
@@ -109,8 +109,8 @@ public class hardwarePapiu {
     }
     public void rotirecleste(){
         try {
-            isOpen=!isOpen;
-            if(isOpen){ //pt deschis
+            isOpenR=!isOpenR;
+            if(isOpenR){ //pt deschis
                 ServoCleste.setPosition(0.5);
             }
             else{ //pt inchis
