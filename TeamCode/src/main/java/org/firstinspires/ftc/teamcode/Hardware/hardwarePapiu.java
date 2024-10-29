@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class hardwarePapiu {
 
@@ -18,8 +19,11 @@ public class hardwarePapiu {
     public DcMotorEx rightBack;
     public DcMotorEx Glisiera; //slot 2 pe Control hub 0-1-2-3 order
     public CRServo ServoBrat;
+    public Servo ServoCleste;
+    public Servo Cleste;
 
     public static double down=0,little=1,low=5,middle=15,up=25;
+    boolean isOpen=false;
 
 
     public hardwarePapiu(OpMode opmode) {myOpMode = opmode;}
@@ -34,12 +38,16 @@ public class hardwarePapiu {
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, "rightBack");
         Glisiera = myOpMode.hardwareMap.get(DcMotorEx.class, "glisiera");
         ServoBrat = myOpMode.hardwareMap.get(CRServo.class, "brat");
+        ServoCleste = myOpMode.hardwareMap.get(Servo.class, "rotire");
+        Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste");
 
         //Configurari
         ServoBrat.setDirection(CRServo.Direction.FORWARD);
         ServoBrat.setPower(0);
         Glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Cleste.setPosition(0);
+        ServoCleste.setPosition(0);
     }
     public void movement(Gamepad gamepad1){
 
@@ -96,6 +104,36 @@ public class hardwarePapiu {
             Glisiera.setTargetPosition((int)(little * VariableStorage.TICKS_PER_CM_Z)+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.1);
+        }
+
+    }
+    public void rotirecleste(){
+        try {
+            isOpen=!isOpen;
+            if(isOpen){ //pt deschis
+                ServoCleste.setPosition(0.5);
+            }
+            else{ //pt inchis
+                ServoCleste.setPosition(0);
+            }
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+
+    }
+    public void cleste(){
+        try {
+            isOpen=!isOpen;
+            if(isOpen){ //pt inchis
+                Cleste.setPosition(0.5);
+            }
+            else{ //pt deschis
+                Cleste.setPosition(0);
+            }
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
         }
 
     }

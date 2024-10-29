@@ -19,5 +19,7 @@ public class MainTeleOp extends OpMode {
         robot.movement(gamepad1);
         robot.miscareservo(gamepad1);
         robot.glisieragamepad(gamepad1, robot.Glisiera);
+        if(gamepad1.left_bumper)robot.rotirecleste();
+        if(gamepad1.y)robot.cleste();
     }
 }
