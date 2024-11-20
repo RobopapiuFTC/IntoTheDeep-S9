@@ -17,8 +17,11 @@ public class MainTeleOp extends OpMode {
     @Override
     public void loop() {
         robot.movement(gamepad1);
-        robot.miscareservo(gamepad1);
+        //robot.miscareservo(gamepad1);
         robot.glisieragamepad(gamepad1, robot.Glisiera);
+        robot.misumigamepad(gamepad2, robot.Misumi);
+        robot.ridicaregamepad(gamepad2, robot.Ridicare1, robot.Ridicare2);
+        if(gamepad1.x)robot.intake();
         if(gamepad1.left_bumper)robot.rotirecleste();
         if(gamepad1.y)robot.cleste();
     }
