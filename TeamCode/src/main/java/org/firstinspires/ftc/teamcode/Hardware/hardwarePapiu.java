@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -34,7 +35,7 @@ public class hardwarePapiu {
     public static double down=0,little=1,low=5,middle=32,up=50;
     public static double upr=60;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
-    boolean isOpenR=false, isOpen=false, isOpenI=false;
+    boolean isOpenR=false, isOpen=false, isOpenI=false, isOpenRI=false;
 
 
     public hardwarePapiu(OpMode opmode) {myOpMode = opmode;}
@@ -72,10 +73,6 @@ public class hardwarePapiu {
         Ridicare1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Ridicare2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Ridicare2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-       /* miscaremisumi("down", Misumi);
-        miscareglisiera("down",Glisiera);
-        miscareridicare("down",Ridicare1);
-        miscareridicare("down",Ridicare2); */
         Intake1.setPosition(1);
         Intake2.setPosition(0);
         ServoBrat.setPosition(0);
@@ -199,6 +196,42 @@ public class hardwarePapiu {
             Glisiera.setPower(0.1);
         }
 
+    }
+    public void rotireintake(){
+        try {
+            isOpenRI=!isOpenRI;
+            if(isOpenRI){ //pt deschis
+                Roata1.setDirection(CRServo.Direction.FORWARD);
+                Roata2.setDirection(CRServo.Direction.FORWARD);
+                Roata1.setPower(1);
+                Roata2.setPower(1);
+            }
+            else{ //pt inchis
+                Roata1.setPower(0);
+                Roata2.setPower(0);
+            }
+            TimeUnit.MILLISECONDS.sleep(150);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+    }
+    public void rotireintakescos(){
+        try {
+            isOpenRI=!isOpenRI;
+            if(isOpenRI){ //pt deschis
+                Roata1.setDirection(CRServo.Direction.REVERSE);
+                Roata2.setDirection(CRServo.Direction.REVERSE);
+                Roata1.setPower(1);
+                Roata2.setPower(1);
+            }
+            else{ //pt inchis
+                Roata1.setPower(0);
+                Roata2.setPower(0);
+            }
+            TimeUnit.MILLISECONDS.sleep(150);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
     }
     public void rotirecleste(){
         try {

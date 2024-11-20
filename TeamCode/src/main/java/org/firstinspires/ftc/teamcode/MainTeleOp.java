@@ -24,5 +24,8 @@ public class MainTeleOp extends OpMode {
         if(gamepad1.x)robot.intake();
         if(gamepad1.left_bumper)robot.rotirecleste();
         if(gamepad1.y)robot.cleste();
+        if(gamepad1.a)robot.rotireintake();
+        if(gamepad1.b)robot.rotireintakescos();
+
     }
 }
