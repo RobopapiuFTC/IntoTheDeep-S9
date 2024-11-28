@@ -6,10 +6,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.TankDrive;
-@Autonomous(name = "AutoRosuDreapta", group = "A")
-public final class AutoRosuDreapta extends LinearOpMode {
+@Autonomous(name = "AutoRosuColorat", group = "A")
+public final class AutoRosuColorat extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-12, 63, Math.toRadians(90));
