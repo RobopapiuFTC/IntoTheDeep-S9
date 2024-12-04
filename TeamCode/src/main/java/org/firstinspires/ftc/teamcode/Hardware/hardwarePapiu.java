@@ -313,7 +313,7 @@ public class hardwarePapiu {
     public void misumigamepad(Gamepad gamepad1,DcMotorEx Glisiera){
 
         if(gamepad1.dpad_left){
-            miscaremisumi("middle",Glisiera);
+            miscaremisumi("middle",Glisiera); //pidMisumi.target = 500;
         }
         if(gamepad1.dpad_up){
             miscaremisumi("up",Glisiera);

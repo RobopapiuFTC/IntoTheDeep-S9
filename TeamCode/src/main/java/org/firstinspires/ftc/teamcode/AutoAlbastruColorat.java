@@ -90,11 +90,10 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         TrajectoryActionBuilder start = drive.actionBuilder(beginPose)
                 .strafeTo(new Vector2d(12,-45))
                 .waitSeconds(1);
-        TrajectoryActionBuilder bara = drive.actionBuilder(new Pose2d(12,-45,Math.toRadians(270)))
+        TrajectoryActionBuilder bara = start.endTrajectory().fresh()
                 .strafeTo(new Vector2d(12,-38.5))
                 .waitSeconds(1);
-        TrajectoryActionBuilder specimen = drive.actionBuilder(new Pose2d(12, -38.5, Math.toRadians(270)))
-                .waitSeconds(3)
+        TrajectoryActionBuilder specimen = bara.endTrajectory().fresh()
                 .strafeToSplineHeading(new Vector2d(37,-40), Math.toRadians(0))
                 .strafeToSplineHeading(new Vector2d(37,-5), Math.toRadians(0))
                 .strafeToSplineHeading(new Vector2d(45,-5), Math.toRadians(0))

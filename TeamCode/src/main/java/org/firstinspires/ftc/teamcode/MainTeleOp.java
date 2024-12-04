@@ -8,10 +8,12 @@ import org.firstinspires.ftc.teamcode.Hardware.hardwarePapiu;
 @TeleOp(name = "MainTeleOp", group = "A")
 public class MainTeleOp extends OpMode {
     hardwarePapiu robot = new hardwarePapiu(this);
+    PIDMisumi pidMisumi = new PIDMisumi();
 
     @Override
     public void init() {
         robot.init();
+        pidMisumi.init();
     }
 
     @Override
