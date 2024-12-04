@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -33,9 +34,9 @@ public class hardwarePapiu {
     public Servo Cleste;
 
     public static double down=0,little=1,low=5,middle=32,up=50;
-    public static double upr=60;
+    public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
-    boolean isOpenR=false, isOpen=false, isOpenI=false, isOpenRI=false,isOpenRR=false;
+    boolean isOpenR=false, isOpen=false, isOpenI=true, isOpenRI=false,isOpenRR=false;
     int i=0;
 
 
@@ -51,8 +52,8 @@ public class hardwarePapiu {
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, "rightBack");
         Glisiera = myOpMode.hardwareMap.get(DcMotorEx.class, "glisiera");
         Misumi = myOpMode.hardwareMap.get(DcMotorEx.class, "misumi");
-        Ridicare1 = myOpMode.hardwareMap.get(DcMotorEx.class, "ridicare1");
-        Ridicare2 = myOpMode.hardwareMap.get(DcMotorEx.class, "ridicare2");
+        Ridicare1 = myOpMode.hardwareMap.get(DcMotorEx.class, "ridicare2");
+        //Ridicare2 = myOpMode.hardwareMap.get(DcMotorEx.class, "ridicare2");
         ServoBrat = myOpMode.hardwareMap.get(Servo.class, "brat");
         Roata1 = myOpMode.hardwareMap.get(CRServo.class, "roata1");
         Roata2 = myOpMode.hardwareMap.get(CRServo.class, "roata2");
@@ -71,10 +72,11 @@ public class hardwarePapiu {
         Misumi.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Ridicare1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Ridicare1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Ridicare2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Ridicare2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Intake1.setPosition(0.65);
-        Intake2.setPosition(0.35);
+        Ridicare1.setDirection(DcMotorSimple.Direction.REVERSE);
+        //Ridicare2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //Ridicare2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Intake1.setPosition(0.45);
+        Intake2.setPosition(0.55);
         ServoBrat.setPosition(1);
         Cleste.setPosition(0.5);
     }
@@ -136,7 +138,7 @@ public class hardwarePapiu {
         }
 
     }
-    public void miscareridicare(String direction, DcMotorEx Glisiera){
+    public void miscareridicare(String direction, DcMotorEx Glisiera) {
 
         int a=0;
 
@@ -150,10 +152,10 @@ public class hardwarePapiu {
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.7);
         } else if(Objects.equals(direction, "middle")){
-            int ticks = (int)(middle * VariableStorage.TICKS_PER_CM_Z);
+            int ticks = (int)(middler * VariableStorage.TICKS_PER_CM_Z);
             Glisiera.setTargetPosition(-ticks+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            Glisiera.setPower(0.4);
+            Glisiera.setPower(0.7);
         } else if(Objects.equals(direction, "low")){
             int ticks = (int)(lowm * VariableStorage.TICKS_PER_CM_Z);
             Glisiera.setTargetPosition(-ticks+a);
@@ -232,7 +234,7 @@ public class hardwarePapiu {
             Thread.currentThread().interrupt();
         }
     }
-    public void brat(){
+    public Action brat(){
         try {
             isOpenR=!isOpenR;
             if(isOpenR){ //pt deschis
@@ -246,8 +248,9 @@ public class hardwarePapiu {
             Thread.currentThread().interrupt();
         }
 
+        return null;
     }
-    public void cleste(){
+    public Action cleste(){
         try {
             isOpen=!isOpen;
             if(isOpen){ //pt inchis
@@ -261,6 +264,7 @@ public class hardwarePapiu {
             Thread.currentThread().interrupt();
         }
 
+        return null;
     }
     public void intake(){
         try {
@@ -299,11 +303,9 @@ public class hardwarePapiu {
 
         if(gamepad1.x){
             miscareridicare("middle",Ridicare1);
-            miscareridicare("middle",Ridicare2);
         }
         if(gamepad1.b){
             miscareridicare("down",Ridicare1);
-            miscareridicare("down",Ridicare2);
 
         }
 

@@ -6,10 +6,14 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Hardware.hardwarePapiu;
+
 @Autonomous(name = "AutoRosuColorat", group = "A")
 public final class AutoRosuColorat extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
+        hardwarePapiu robot = new hardwarePapiu(this);
+        robot.init();
         Pose2d beginPose = new Pose2d(-12, 63, Math.toRadians(90));
             MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
