@@ -7,7 +7,9 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Config
 @TeleOp
@@ -24,6 +26,10 @@ public class PIDMisumi extends OpMode{
         controller = new PIDController(p,i,d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         misumi = hardwareMap.get(DcMotorEx.class, "misumi");
+
+        misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        misumi.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     }
     @Override
     public void loop(){
