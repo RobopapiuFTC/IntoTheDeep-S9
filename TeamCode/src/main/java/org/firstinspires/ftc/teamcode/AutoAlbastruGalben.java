@@ -78,7 +78,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         hardwarePapiu robot = new hardwarePapiu(this);
         robot.init();
-        Pose2d beginPose = new Pose2d(32, 63, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(32, -63, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Brat brat = new Brat(hardwareMap);
         Cleste cleste = new Cleste(hardwareMap);
@@ -87,9 +87,10 @@ public final class AutoAlbastruGalben extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(-12,-32))
+                        .strafeTo(new Vector2d(12,-45))
                         .afterDisp(0, brat.bratfata())
-                        .waitSeconds(0.5)
+                        .strafeTo(new Vector2d(12,-38.5))
+                        .afterDisp(0, cleste.clestelasat())
                         .strafeToSplineHeading(new Vector2d(-24,-50), Math.toRadians(90))
                         .strafeToSplineHeading(new Vector2d(-48,-38), Math.toRadians(90))
                         .waitSeconds(0.5)
