@@ -222,7 +222,7 @@ public class hardwarePapiu {
         try {
             isOpenR=!isOpenR;
             if(isOpenR){ //pt deschis
-                ServoBrat.setPosition(0.25);
+                ServoBrat.setPosition(0.1);
             }
             else{ //pt inchis
                 ServoBrat.setPosition(1);
