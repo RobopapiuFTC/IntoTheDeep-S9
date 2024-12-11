@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Hardware.hardwarePapiu;
 
@@ -26,6 +27,7 @@ public class MainTeleOp extends OpMode {
         controller = new PIDController(p,i,d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         misumi = hardwareMap.get(DcMotorEx.class, "misumi");
+        target=0;
         misumi.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         misumi.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -34,16 +36,19 @@ public class MainTeleOp extends OpMode {
     @Override
     public void loop() {
         robot.movement(gamepad1);
-        robot.glisieragamepad(gamepad1, robot.Glisiera);
-        robot.ridicaregamepad(gamepad2, robot.Ridicare1, robot.Ridicare2);
-        if(gamepad1.x)robot.intake();
-        if(gamepad1.left_bumper)robot.brat();
-        if(gamepad1.y)robot.cleste();
-        if(gamepad1.a)robot.rotireintake();
-        if(gamepad2.dpad_down)target=5;
-        if(gamepad2.dpad_left)target=200;
-        if(gamepad2.dpad_right)target=600;
-        if(gamepad2.dpad_up)target=1000;
+        robot.glisieragamepad(gamepad2, robot.Glisiera);
+        if(gamepad2.b)robot.intake();
+        if(gamepad2.y) {
+            robot.Intake1.setPosition(0.7);
+            robot.Intake2.setPosition(0.3);
+        }
+        if(gamepad2.x)robot.cleste();
+        if(gamepad2.left_bumper)robot.brat();
+        if(gamepad2.a)robot.rotireintake();
+        if(gamepad1.dpad_down)target=5;
+        if(gamepad1.dpad_left)target=200;
+        if(gamepad1.dpad_right)target=600;
+        if(gamepad1.dpad_up)target=800;
         controller.setPID(p,i,d);
         int pozitie=misumi.getCurrentPosition();
         double pid = controller.calculate(pozitie, target);

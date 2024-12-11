@@ -12,9 +12,12 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Hardware.VariableStorage;
 import org.firstinspires.ftc.teamcode.Hardware.hardwarePapiu;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.TankDrive;
@@ -75,6 +78,42 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         }
         public Action clestelasat(){
             return new ClesteLasat();
+        }
+    }
+    public class Glisiera{
+        private DcMotorEx glisiera;
+        public Glisiera(HardwareMap hardwareMap){
+            glisiera = hardwareMap.get(DcMotorEx.class, "glisiera");
+            glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        public class GlisieraSus implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                int ticks = (int)(75 * VariableStorage.TICKS_PER_CM_Z);
+                glisiera.setTargetPosition(-ticks);
+                glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                glisiera.setPower(0.6);
+
+                return false;
+            }
+        }
+        public Action GlisieraSus(){
+            return new GlisieraSus();
+        }
+        public class GlisieraJos implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                int ticks = (int)(0 * VariableStorage.TICKS_PER_CM_Z);
+                glisiera.setTargetPosition(-ticks);
+                glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                glisiera.setPower(0.6);
+
+                return false;
+            }
+        }
+        public Action GlisieraJos(){
+            return new GlisieraJos();
         }
     }
     @Override

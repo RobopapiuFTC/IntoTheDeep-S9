@@ -14,7 +14,7 @@ public final class AutoRosuGalben extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         hardwarePapiu robot = new hardwarePapiu(this);
         robot.init();
-        Pose2d beginPose = new Pose2d(32, 63, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(32, 60, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         waitForStart();
