@@ -35,7 +35,7 @@ public class hardwarePapiu {
     public static double down=0,little=1,low=5,middle=32,up=53;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
-    boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=false,isOpenRR=false;
+    boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false;
     int i=0;
 
 
@@ -59,8 +59,8 @@ public class hardwarePapiu {
         Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste");
 
         //Configurari
-        Roata1.setPosition(0.45);
-        Roata2.setPosition(0.55);
+        Roata1.setPosition(0.33);
+        Roata2.setPosition(0.67);
         Glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Ridicare1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -68,10 +68,10 @@ public class hardwarePapiu {
         Ridicare1.setDirection(DcMotorSimple.Direction.REVERSE);
         //Ridicare2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //Ridicare2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Intake1.setPosition(0.7);
-        Intake2.setPosition(0.3);
+        Intake1.setPosition(0.8);
+        Intake2.setPosition(0.2);
         ServoBrat.setPosition(1);
-        Cleste.setPosition(0.5);
+        Cleste.setPosition(0.3);
     }
     public void movement(Gamepad gamepad1){
 
@@ -195,8 +195,8 @@ public class hardwarePapiu {
         try {
             isOpenRI=!isOpenRI;
             if(isOpenRI){ //pt deschis
-                Roata1.setPosition(0.35);
-                Roata2.setPosition(0.65);
+                Roata1.setPosition(0.33);
+                Roata2.setPosition(0.67);
             }
             else{ //pt inchis
                 Roata1.setPosition(0.45);
@@ -210,8 +210,8 @@ public class hardwarePapiu {
     }
     public void rotireintakes(){
         try {
-                Intake1.setPosition(0.45);
-                Roata2.setPosition(0.55);
+                Intake1.setPosition(0.7);
+                Intake2.setPosition(0.3);
                 isOpenI = true;
             TimeUnit.MILLISECONDS.sleep(150);
         } catch (InterruptedException e){
@@ -258,8 +258,8 @@ public class hardwarePapiu {
                 isOpen=true;
             }
             else{ //pt deschis
-                Intake1.setPosition(0.4);
-                Intake2.setPosition(0.6);
+                Intake1.setPosition(0.36);
+                Intake2.setPosition(0.64);
             }
             TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){

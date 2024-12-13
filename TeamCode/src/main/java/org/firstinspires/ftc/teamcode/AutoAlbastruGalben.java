@@ -38,7 +38,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class BratFata implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Brat.setPosition(0.20);
+                Brat.setPosition(0.1);
 
                 return false;
             }
@@ -46,6 +46,18 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public Action bratfata(){
             return new BratFata();
         }
+        public class BratAuto implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                Brat.setPosition(0.2);
+
+                return false;
+            }
+        }
+        public Action bratauto(){
+            return new BratAuto();
+        }
+
         public class BratJos implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
@@ -94,8 +106,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class IntakeJos implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intake1.setPosition(0.28);
-                intake2.setPosition(0.72);
+                intake1.setPosition(0.3);
+                intake2.setPosition(0.7);
 
                 return false;
             }
@@ -133,7 +145,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class target200 implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                target=200;
+                target=150;
                 while(target>misumi.getCurrentPosition()-5) {
                     controller.setPID(p, i, d);
                     int pozitie = misumi.getCurrentPosition();
@@ -211,10 +223,10 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class GlisieraSus implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                int ticks = (int)(70 * VariableStorage.TICKS_PER_CM_Z);
+                int ticks = (int)(55 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera.setPower(0.3);
+                glisiera.setPower(0.6);
 
                 return false;
             }
@@ -228,13 +240,42 @@ public final class AutoAlbastruGalben extends LinearOpMode {
                 int ticks = (int)(0.3 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera.setPower(0.3);
+                glisiera.setPower(0.6);
 
                 return false;
             }
         }
         public Action GlisieraJos(){
             return new Glisiera.GlisieraJos();
+        }
+        public class GlisieraBara implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                int ticks = (int)(30 * VariableStorage.TICKS_PER_CM_Z);
+                glisiera.setTargetPosition(-ticks);
+                glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                glisiera.setPower(0.6);
+
+                return false;
+            }
+        }
+        public Action GlisieraBara(){
+            return new Glisiera.GlisieraBara();
+        }
+
+        public class GlisieraBaraJos implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                int ticks = (int)(12 * VariableStorage.TICKS_PER_CM_Z);
+                glisiera.setTargetPosition(-ticks);
+                glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                glisiera.setPower(0.3);
+
+                return false;
+            }
+        }
+        public Action GlisieraBaraJos(){
+            return new Glisiera.GlisieraBaraJos();
         }
     }
     @Override
@@ -260,8 +301,19 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         waitForStart();
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeToSplineHeading(new Vector2d(-24,-50), Math.toRadians(90))
-                        .strafeToSplineHeading(new Vector2d(-50,-43), Math.toRadians(90))
+                        .strafeTo(new Vector2d(-4,-35))
+                        .stopAndAdd(glisiera.GlisieraBara())
+                        .waitSeconds(2)
+                        .stopAndAdd(brat.bratfata())
+                        .waitSeconds(0.7)
+                        .stopAndAdd(glisiera.GlisieraBaraJos())
+                        .waitSeconds(3)
+                        .stopAndAdd(cleste.clestelasat())
+                        .waitSeconds(0.5)
+                        .stopAndAdd(glisiera.GlisieraJos())
+                        .stopAndAdd(clestei.clestelasat())
+                        .strafeToSplineHeading(new Vector2d(-24,-50), Math.toRadians(91))
+                        .strafeToSplineHeading(new Vector2d(-51,-43), Math.toRadians(91))
                         .stopAndAdd(target1.target200())
                         .waitSeconds(0.5)
                         .stopAndAdd(intake.IntakeJos())
@@ -270,19 +322,21 @@ public final class AutoAlbastruGalben extends LinearOpMode {
                         .waitSeconds(0.5)
                         .stopAndAdd(intake.IntakeOut())
                         .waitSeconds(0.5)
+                        .stopAndAdd(brat.bratjos())
+                        .waitSeconds(1)
                         .stopAndAdd(cleste.clestestrans())
                         .waitSeconds(0.5)
                         .stopAndAdd(clestei.clestelasat())
                         .waitSeconds(0.5)
+                        .stopAndAdd(brat.bratauto())
+                        .waitSeconds(0.5)
                         .stopAndAdd(intake.IntakeSus())
                         .waitSeconds(0.5)
-                        .stopAndAdd(brat.bratfata())
-                        .waitSeconds(0.5)
                         .stopAndAdd(glisiera.GlisieraSus())
-                        .waitSeconds(3.2)
-                        .strafeToSplineHeading(new Vector2d(-58,-54), Math.toRadians(41))
+                        .waitSeconds(2.4)
+                        .strafeToSplineHeading(new Vector2d(-58.5,-56), Math.toRadians(45))
                         .stopAndAdd(cleste.clestelasat())
-                        .waitSeconds(1)
+                        .waitSeconds(0.5)
                         .stopAndAdd(brat.bratjos())
                         .waitSeconds(0.5)
                         .strafeToSplineHeading(new Vector2d(-50,-50), Math.toRadians(90))
@@ -290,20 +344,9 @@ public final class AutoAlbastruGalben extends LinearOpMode {
                         .stopAndAdd(glisiera.GlisieraJos())
                         .waitSeconds(2.5)
                         .stopAndAdd(target1.target0())
-                        .strafeToSplineHeading(new Vector2d(-57,-38), Math.toRadians(90))
                         .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(-55,-54), Math.toRadians(45))
-                        .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(-58,-37), Math.toRadians(135))
-                        .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(-55,-54), Math.toRadians(45))
-                        .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(-55,-10), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(-28,-10), Math.toRadians(0))
-                        .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(-55,-10), Math.toRadians(0))
-                        .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(-55,-54), Math.toRadians(45))
+                        .strafeToSplineHeading(new Vector2d(-40,-3), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-24,-3), Math.toRadians(90))
                         .build());
 
     }
