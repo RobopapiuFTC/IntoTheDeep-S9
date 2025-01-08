@@ -274,7 +274,7 @@ public final class AutoAlbastruColorat extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
 
-        Pose2d beginPose = new Pose2d(12, -60, Math.toRadians(270));
+        Pose2d beginPose = new Pose2d(12, -61.5, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         hardwarePapiu robot = new hardwarePapiu(this);
         Brat brat = new Brat(hardwareMap);
@@ -307,25 +307,18 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                         .stopAndAdd(glisiera.GlisieraJos())
                         .waitSeconds(0.5)
                         .strafeTo(new Vector2d(12,-50))
-                        .strafeToSplineHeading(new Vector2d(37,-40), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(37,-5), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(45,-5), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(45,-55), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(45,-5), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(30,-40), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(30,-5), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(38,-5), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(42,-55), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(38,-5), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(47,-5), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(47,-55), Math.toRadians(0))
+                        .strafeToSplineHeading(new Vector2d(47,-5), Math.toRadians(0))
                         .strafeToSplineHeading(new Vector2d(54,-5), Math.toRadians(0))
                         .strafeToSplineHeading(new Vector2d(54,-55), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(37,-55), Math.toRadians(90))
-                        .strafeToSplineHeading(new Vector2d(12,-40), Math.toRadians(270))
+
                         .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(12,-42), Math.toRadians(270))
-                        .strafeToSplineHeading(new Vector2d(54,-30), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(54,-5), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(60,-5), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(60,-55), Math.toRadians(0))
-                        .strafeToSplineHeading(new Vector2d(37,-55), Math.toRadians(90))
-                        .strafeToSplineHeading(new Vector2d(12,-40), Math.toRadians(270))
-                        .waitSeconds(0.5)
-                        .strafeToSplineHeading(new Vector2d(50,-55), Math.toRadians(90))
                         .build());
 
     }

@@ -130,8 +130,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class IntakeSus implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intake1.setPosition(0.7);
-                intake2.setPosition(0.3);
+                intake1.setPosition(0.36);
+                intake2.setPosition(0.64);
 
                 return false;
             }
@@ -191,8 +191,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class ClesteStrans implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Roata1.setPosition(0.35);
-                Roata2.setPosition(0.65);
+                Roata1.setPosition(0.33);
+                Roata2.setPosition(0.67);
 
                 return false;
             }
@@ -203,8 +203,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class ClesteLasat implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Roata1.setPosition(0.42);
-                Roata2.setPosition(0.58);
+                Roata1.setPosition(0.45);
+                Roata2.setPosition(0.55);
 
                 return false;
             }
@@ -282,7 +282,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         hardwarePapiu robot = new hardwarePapiu(this);
         robot.init();
-        Pose2d beginPose = new Pose2d(-32, -60, Math.toRadians(270));
+        Pose2d beginPose = new Pose2d(-32, -61, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Brat brat = new Brat(hardwareMap);
         Cleste cleste = new Cleste(hardwareMap);
@@ -313,7 +313,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
                         .stopAndAdd(glisiera.GlisieraJos())
                         .stopAndAdd(clestei.clestelasat())
                         .strafeToSplineHeading(new Vector2d(-24,-50), Math.toRadians(91))
-                        .strafeToSplineHeading(new Vector2d(-51,-43), Math.toRadians(91))
+                        .strafeToSplineHeading(new Vector2d(-50,-42.5), Math.toRadians(91))
                         .stopAndAdd(target1.target200())
                         .waitSeconds(0.5)
                         .stopAndAdd(intake.IntakeJos())
@@ -334,7 +334,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
                         .waitSeconds(0.5)
                         .stopAndAdd(glisiera.GlisieraSus())
                         .waitSeconds(2.4)
-                        .strafeToSplineHeading(new Vector2d(-58.5,-56), Math.toRadians(45))
+                        .strafeToSplineHeading(new Vector2d(-59,-55), Math.toRadians(45))
                         .stopAndAdd(cleste.clestelasat())
                         .waitSeconds(0.5)
                         .stopAndAdd(brat.bratjos())

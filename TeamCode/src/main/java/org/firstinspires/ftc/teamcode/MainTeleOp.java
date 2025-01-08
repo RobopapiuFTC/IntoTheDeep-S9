@@ -37,13 +37,14 @@ public class MainTeleOp extends OpMode {
     public void loop() {
         robot.movement(gamepad1);
         robot.glisieragamepad(gamepad2, robot.Glisiera);
-        if(gamepad2.b)robot.intake();
+        if(gamepad2.b)//robot.intake();
+            robot.active();
         if(gamepad2.y)robot.rotireintakes();
         if(gamepad2.x)robot.cleste();
         if(gamepad2.left_bumper)robot.brat();
         if(gamepad2.a)robot.rotireintake();
         if(gamepad1.dpad_down)target=5;
-        if(gamepad1.dpad_left)target=150;
+        if(gamepad1.dpad_left)target=200;
         if(gamepad1.dpad_right)target=600;
         if(gamepad1.dpad_up)target=800;
         controller.setPID(p,i,d);
