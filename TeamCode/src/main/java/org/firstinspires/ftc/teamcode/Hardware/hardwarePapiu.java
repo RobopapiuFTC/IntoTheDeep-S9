@@ -31,8 +31,9 @@ public class hardwarePapiu {
 
     public Servo ServoCleste;
     public Servo Cleste;
+    public DcMotorEx misumi;
 
-    public static double down=0,little=1,low=5,middle=32,up=53;
+    public static double down=0,little=1,low=5,middle=32,up=48;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
     boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false;
@@ -57,7 +58,7 @@ public class hardwarePapiu {
         Intake1 = myOpMode.hardwareMap.get(Servo.class, "intake1");
         Intake2 = myOpMode.hardwareMap.get(Servo.class, "intake2");
         Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste");
-
+        misumi = myOpMode.hardwareMap.get(DcMotorEx.class, "misumi");
         //Configurari
         Glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -68,6 +69,9 @@ public class hardwarePapiu {
         ServoBrat.setPosition(1);
         ServoBrat1.setPosition(0);
         Cleste.setPosition(0.3);
+        misumi.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        misumi.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public void movement(Gamepad gamepad1){
 
