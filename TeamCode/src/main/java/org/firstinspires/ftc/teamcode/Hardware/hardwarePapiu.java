@@ -31,9 +31,8 @@ public class hardwarePapiu {
 
     public Servo ServoCleste;
     public Servo Cleste;
-    public DcMotorEx misumi;
 
-    public static double down=0,little=1,low=5,middle=32,up=48;
+    public static double down=0,little=1,low=4,middle=32,up=48;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
     boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false;
@@ -58,7 +57,6 @@ public class hardwarePapiu {
         Intake1 = myOpMode.hardwareMap.get(Servo.class, "intake1");
         Intake2 = myOpMode.hardwareMap.get(Servo.class, "intake2");
         Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste");
-        misumi = myOpMode.hardwareMap.get(DcMotorEx.class, "misumi");
         //Configurari
         Glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -66,12 +64,9 @@ public class hardwarePapiu {
         Glisiera1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Intake1.setPosition(0.8);
         Intake2.setPosition(0.2);
-        ServoBrat.setPosition(1);
-        ServoBrat1.setPosition(0);
+        ServoBrat.setPosition(0.7); //1
+        ServoBrat1.setPosition(0.3); //0
         Cleste.setPosition(0.3);
-        misumi.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        misumi.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public void movement(Gamepad gamepad1){
 
@@ -189,7 +184,7 @@ public class hardwarePapiu {
             Glisiera1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera1.setPower(0.6);
         } else if(Objects.equals(direction, "low")){
-            int ticks = (int)(10 * VariableStorage.TICKS_PER_CM_Z);
+            int ticks = (int)(low * VariableStorage.TICKS_PER_CM_Z);
             Glisiera.setTargetPosition(-ticks+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.6);
@@ -210,8 +205,8 @@ public class hardwarePapiu {
         try {
             isOpenI=!isOpenI;
             if(isOpenI){ //pt deschis
-                Intake1.setPosition(0.7);
-                Intake2.setPosition(0.3);
+                Intake1.setPosition(0.67);
+                Intake2.setPosition(0.33);
             }
             else{ //pt inchis
                 Intake1.setPosition(0.8);
@@ -226,12 +221,14 @@ public class hardwarePapiu {
         try {
             isOpenR=!isOpenR;
             if(isOpenR){ //pt deschis
-                ServoBrat.setPosition(0.1);
-                ServoBrat1.setPosition(0.9);
+                ServoBrat.setPosition(0.35);
+                ServoBrat1.setPosition(0.65);
             }
             else{ //pt inchis
-                ServoBrat.setPosition(1);
-                ServoBrat1.setPosition(0);
+                ServoBrat.setPosition(0.98);
+                ServoBrat1.setPosition(0.02);
+                Cleste.setPosition(0.42);
+                isOpen=true;
             }
             TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){
@@ -243,7 +240,7 @@ public class hardwarePapiu {
         try {
             isOpen=!isOpen;
             if(isOpen){ //pt inchis
-                Cleste.setPosition(0.5);
+                Cleste.setPosition(0.42);
             }
             else{ //pt deschis
                 Cleste.setPosition(0.3);

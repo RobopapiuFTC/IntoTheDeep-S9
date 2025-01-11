@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class PIDMisumi extends OpMode{
         private PIDController controller;
-        public static double p=0, i=0, d=0;
+        public static double p=0.01, i=0, d=0;
         public static double f=0;
         public static int target=0;
         public final double ticks_in_degree=700/180.0;
@@ -28,8 +28,8 @@ public class PIDMisumi extends OpMode{
         misumi = hardwareMap.get(DcMotorEx.class, "misumi");
 
         misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        misumi.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        misumi.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        misumi.setDirection(DcMotor.Direction.REVERSE);
     }
     @Override
     public void loop(){
