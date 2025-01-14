@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
-import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -25,6 +24,7 @@ public class hardwarePapiu {
 
     public Servo ServoBrat;
     public Servo ServoBrat1;
+    public Servo ClesteS;
     public Servo Intake1;
     public Servo Intake2;
     public CRServo IntakeActive;
@@ -32,10 +32,10 @@ public class hardwarePapiu {
     public Servo ServoCleste;
     public Servo Cleste;
 
-    public static double down=0,little=1,low=4,middle=32,up=48;
+    public static double down=0,little=1,low=4,middle=32,up=44;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
-    boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false;
+    boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false,isOpenC=false;
     int i=0;
 
 
@@ -51,35 +51,39 @@ public class hardwarePapiu {
         rightBack = myOpMode.hardwareMap.get(DcMotorEx.class, "rightBack");
         Glisiera = myOpMode.hardwareMap.get(DcMotorEx.class, "glisiera");
         Glisiera1 = myOpMode.hardwareMap.get(DcMotorEx.class, "glisiera1");
-        IntakeActive = myOpMode.hardwareMap.get(CRServo.class, "active");
+        ClesteS=myOpMode.hardwareMap.get(Servo.class, "clestes");
+        /*IntakeActive = myOpMode.hardwareMap.get(CRServo.class, "active");
         ServoBrat = myOpMode.hardwareMap.get(Servo.class, "brat");
         ServoBrat1 = myOpMode.hardwareMap.get(Servo.class, "brat1");
         Intake1 = myOpMode.hardwareMap.get(Servo.class, "intake1");
         Intake2 = myOpMode.hardwareMap.get(Servo.class, "intake2");
-        Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste");
+        Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste"); */
         //Configurari
-        Glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Glisiera1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Glisiera1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Intake1.setPosition(0.8);
+        Glisiera.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Glisiera.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        Glisiera1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Glisiera1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+      /*  Intake1.setPosition(0.8);
         Intake2.setPosition(0.2);
         ServoBrat.setPosition(0.7); //1
         ServoBrat1.setPosition(0.3); //0
-        Cleste.setPosition(0.3);
+        Cleste.setPosition(0.3); */
+        ClesteS.setPosition(0.3);
+        Glisiera.setDirection(DcMotorSimple.Direction.REVERSE);
+        Glisiera1.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void movement(Gamepad gamepad1){
 
-        double y = gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x * 1.1;
-        double rx = gamepad1.right_stick_x;
+        double drive = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+        double strafe = gamepad1.left_stick_x; // Counteract imperfect strafing
+        double turn = gamepad1.right_stick_x;
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y - x - rx) / denominator;
-        double backLeftPower = (y + x - rx) / denominator;
-        double frontRightPower = (-y - x - rx) / denominator;
-        double backRightPower = (-y + x - rx) / denominator;
-
+        double frontLeftPower = (drive + strafe + turn);
+        double backLeftPower = (drive - strafe + turn + 0.05);
+        double frontRightPower = (drive - strafe - turn);
+        double backRightPower = (drive + strafe - turn + 0.15);
 
         leftFront.setPower(frontLeftPower);
         leftBack.setPower(backLeftPower);
@@ -131,26 +135,26 @@ public class hardwarePapiu {
         int a=0;
 
         if(Objects.equals(direction, "up")){
-            int ticks = (int)(upr * VariableStorage.TICKS_PER_CM_Z);
+            int ticks = (int)(up * VariableStorage.TICKS_PER_CM_Z);
             Glisiera.setTargetPosition(-ticks+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.1);
         } else if(Objects.equals(direction, "down")){
-            Glisiera.setTargetPosition((int)(downm * VariableStorage.TICKS_PER_CM_Z)+a);
+            Glisiera.setTargetPosition((int)(down * VariableStorage.TICKS_PER_CM_Z)+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.7);
         } else if(Objects.equals(direction, "middle")){
-            int ticks = (int)(middler * VariableStorage.TICKS_PER_CM_Z);
+            int ticks = (int)(middle * VariableStorage.TICKS_PER_CM_Z);
             Glisiera.setTargetPosition(-ticks+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.7);
         } else if(Objects.equals(direction, "low")){
-            int ticks = (int)(lowm * VariableStorage.TICKS_PER_CM_Z);
+            int ticks = (int)(low * VariableStorage.TICKS_PER_CM_Z);
             Glisiera.setTargetPosition(-ticks+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.1);
         } else if(Objects.equals(direction, "little")){
-            Glisiera.setTargetPosition((int)(littlem * VariableStorage.TICKS_PER_CM_Z)+a);
+            Glisiera.setTargetPosition((int)(little * VariableStorage.TICKS_PER_CM_Z)+a);
             Glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Glisiera.setPower(0.1);
         }
@@ -227,8 +231,6 @@ public class hardwarePapiu {
             else{ //pt inchis
                 ServoBrat.setPosition(0.98);
                 ServoBrat1.setPosition(0.02);
-                Cleste.setPosition(0.42);
-                isOpen=true;
             }
             TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){
@@ -245,7 +247,22 @@ public class hardwarePapiu {
             else{ //pt deschis
                 Cleste.setPosition(0.3);
             }
-            TimeUnit.MILLISECONDS.sleep(300);
+            TimeUnit.MILLISECONDS.sleep(1000);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+
+    }
+    public void clestes(){
+        try {
+            isOpenC=!isOpenC;
+            if(isOpen){ //pt inchis
+                ClesteS.setPosition(0.42);
+            }
+            else{ //pt deschis
+                ClesteS.setPosition(0.3);
+            }
+            TimeUnit.MILLISECONDS.sleep(1000);
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
         }
@@ -290,7 +307,7 @@ public class hardwarePapiu {
     public void activestop(){
         try {//pt inchis
                 IntakeActive.setPower(0);
-                isOpenA=false;
+                isOpenA=true;
             TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
@@ -314,16 +331,20 @@ public class hardwarePapiu {
         }
 
     }
-    public void ridicaregamepad(Gamepad gamepad1,DcMotorEx Ridicare1, DcMotorEx Ridicare2){
+    public void ridicaregamepad(Gamepad gamepad1,DcMotorEx Ridicare1){
 
-        if(gamepad1.x){
+        if(gamepad1.dpad_left){
             miscareridicare("middle",Ridicare1);
         }
-        if(gamepad1.b){
-            miscareridicare("down",Ridicare1);
-
+        if(gamepad1.dpad_up){
+            miscareridicare("up",Ridicare1);
         }
-
+        if(gamepad1.dpad_down){
+            miscareridicare("down",Ridicare1);
+        }
+        if(gamepad1.dpad_right){
+            miscareridicare("low",Ridicare1);
+        }
     }
     public void misumigamepad(Gamepad gamepad1,DcMotorEx Glisiera){
 

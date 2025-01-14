@@ -31,14 +31,17 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     public static int target=0;
     public final double ticks_in_degree=700/180.0;
     public class Brat{
-        private Servo Brat;
+        private Servo ServoBrat;
+        private Servo ServoBrat1;
         public Brat(HardwareMap hardwareMap){
-            Brat = hardwareMap.get(Servo.class, "brat");
+            ServoBrat = hardwareMap.get(Servo.class, "brat");
+            ServoBrat1 = hardwareMap.get(Servo.class, "brat1");
         }
         public class BratFata implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Brat.setPosition(0.1);
+                ServoBrat.setPosition(0.35);
+                ServoBrat1.setPosition(0.65);
 
                 return false;
             }
@@ -49,7 +52,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class BratAuto implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Brat.setPosition(0.2);
+                ServoBrat.setPosition(0.35);
+                ServoBrat1.setPosition(0.65);
 
                 return false;
             }
@@ -61,7 +65,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class BratJos implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Brat.setPosition(1);
+                ServoBrat.setPosition(0.7); //1
+                ServoBrat1.setPosition(0.3);
 
                 return false;
             }
@@ -182,17 +187,14 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     }
     public class ClesteI{
 
-        private Servo Roata1;
-        private Servo Roata2;
+        private Servo Cleste;
         public ClesteI(HardwareMap hardwareMap){
-            Roata1 = hardwareMap.get(Servo.class, "roata1");
-            Roata2 = hardwareMap.get(Servo.class, "roata2");
+            Cleste = hardwareMap.get(Servo.class, "cleste");
         }
         public class ClesteStrans implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Roata1.setPosition(0.33);
-                Roata2.setPosition(0.67);
+                Cleste.setPosition(0.3);
 
                 return false;
             }
@@ -203,8 +205,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class ClesteLasat implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                Roata1.setPosition(0.45);
-                Roata2.setPosition(0.55);
+                Cleste.setPosition(0.42);
 
                 return false;
             }
@@ -215,18 +216,25 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     }
     public class Glisiera{
         private DcMotorEx glisiera;
+        private DcMotorEx glisiera1;
         public Glisiera(HardwareMap hardwareMap){
             glisiera = hardwareMap.get(DcMotorEx.class, "glisiera");
             glisiera.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             glisiera.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            glisiera1 = hardwareMap.get(DcMotorEx.class, "glisiera1");
+            glisiera1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            glisiera1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         public class GlisieraSus implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                int ticks = (int)(55 * VariableStorage.TICKS_PER_CM_Z);
+                int ticks = (int)(44 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 glisiera.setPower(0.6);
+                glisiera1.setTargetPosition(-ticks);
+                glisiera1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                glisiera1.setPower(0.6);
 
                 return false;
             }
@@ -237,10 +245,13 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class GlisieraJos implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                int ticks = (int)(0.3 * VariableStorage.TICKS_PER_CM_Z);
+                int ticks = (int)(0 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 glisiera.setPower(0.6);
+                glisiera1.setTargetPosition(-ticks);
+                glisiera1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                glisiera1.setPower(0.6);
 
                 return false;
             }
@@ -282,7 +293,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         hardwarePapiu robot = new hardwarePapiu(this);
         robot.init();
-        Pose2d beginPose = new Pose2d(-32, -61, Math.toRadians(270));
+        Pose2d beginPose = new Pose2d(-32, -61, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Brat brat = new Brat(hardwareMap);
         Cleste cleste = new Cleste(hardwareMap);
@@ -301,7 +312,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         waitForStart();
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(-4,-35))
+                       /* .strafeTo(new Vector2d(-4,-35))
                         .stopAndAdd(glisiera.GlisieraBara())
                         .waitSeconds(2)
                         .stopAndAdd(brat.bratfata())
@@ -346,7 +357,18 @@ public final class AutoAlbastruGalben extends LinearOpMode {
                         .stopAndAdd(target1.target0())
                         .waitSeconds(0.5)
                         .strafeToSplineHeading(new Vector2d(-40,-3), Math.toRadians(90))
-                        .strafeToSplineHeading(new Vector2d(-24,-3), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-24,-3), Math.toRadians(90))*/
+                        .strafeToSplineHeading(new Vector2d(-45,-61), Math.toRadians(180))
+                        .stopAndAdd(glisiera.GlisieraSus())
+                        .waitSeconds(5)
+                        .stopAndAdd(brat.bratfata())
+                        .waitSeconds(1)
+                        .stopAndAdd(clestei.clestelasat())
+                        .waitSeconds(1)
+                        .stopAndAdd(brat.bratjos())
+                        .waitSeconds(1)
+                        .stopAndAdd(glisiera.GlisieraJos())
+                        .waitSeconds(5)
                         .build());
 
     }
