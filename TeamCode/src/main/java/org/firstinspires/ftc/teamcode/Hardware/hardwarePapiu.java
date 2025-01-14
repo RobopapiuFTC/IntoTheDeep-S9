@@ -32,7 +32,7 @@ public class hardwarePapiu {
     public Servo ServoCleste;
     public Servo Cleste;
 
-    public static double down=0,little=1,low=4,middle=32,up=44;
+    public static double down=0,little=1,low=20,middle=25,up=35;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
     boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false,isOpenC=false;
@@ -256,13 +256,13 @@ public class hardwarePapiu {
     public void clestes(){
         try {
             isOpenC=!isOpenC;
-            if(isOpen){ //pt inchis
-                ClesteS.setPosition(0.42);
+            if(isOpenC){ //pt inchis
+                ClesteS.setPosition(0.5);
             }
             else{ //pt deschis
                 ClesteS.setPosition(0.3);
             }
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
         }
