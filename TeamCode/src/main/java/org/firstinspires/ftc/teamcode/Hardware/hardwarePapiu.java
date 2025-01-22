@@ -63,8 +63,8 @@ public class hardwarePapiu {
         //Configurari
         Glisiera.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         Glisiera1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-       Intake1.setPosition(0.8);
-        Intake2.setPosition(0.2);
+       Intake1.setPosition(0.85);
+        Intake2.setPosition(0.15);
         ServoBrat.setPosition(0.95); //1
         ServoBrat1.setPosition(0.05); //0
         Cleste.setPosition(0.47);
@@ -218,8 +218,8 @@ public class hardwarePapiu {
                 Intake2.setPosition(0.33);
             }
             else{ //pt inchis
-                Intake1.setPosition(0.8);
-                Intake2.setPosition(0.2);
+                Intake1.setPosition(0.85);
+                Intake2.setPosition(0.15);
             }
             TimeUnit.MILLISECONDS.sleep(150);
         } catch (InterruptedException e){

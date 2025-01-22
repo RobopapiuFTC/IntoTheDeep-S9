@@ -124,8 +124,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class IntakeOut implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intake1.setPosition(0.8);
-                intake2.setPosition(0.2);
+                intake1.setPosition(0.85);
+                intake2.setPosition(0.15);
 
                 return false;
             }
