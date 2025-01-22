@@ -25,10 +25,10 @@ public class MainTeleOp extends OpMode {
     @Override
     public void init() {
         robot.init();
-        target=0;
+   /*     target=0;
         controller = new PIDController(p,i,d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        /*misumi = hardwareMap.get(DcMotorEx.class, "misumi");
+        misumi = hardwareMap.get(DcMotorEx.class, "misumi");
         misumi.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         misumi.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -39,6 +39,7 @@ public class MainTeleOp extends OpMode {
     public void loop() {
         robot.movement(gamepad1);
         robot.glisieragamepad(gamepad2, robot.Glisiera ,robot.Glisiera1);
+        robot.misumigamepad(gamepad1,robot.misumi);
         if(gamepad2.b)//robot.intake();
             robot.active();
         if(gamepad2.y)robot.rotireintakes();
@@ -46,11 +47,11 @@ public class MainTeleOp extends OpMode {
         if(gamepad2.x)robot.cleste();
         if(gamepad2.right_bumper)robot.clestes();
         if(gamepad2.left_bumper)robot.brat();
-        /*if(gamepad1.dpad_up)target=640;
+       /* if(gamepad1.dpad_up)target=640;
         if(gamepad1.dpad_right)target=150;
         if(gamepad1.dpad_left)target=500;
-        if(gamepad1.dpad_down)target=0; */
-        /* controller.setPID(p,i,d);
+        if(gamepad1.dpad_down)target=0;
+         controller.setPID(p,i,d);
         int pozitie=misumi.getCurrentPosition();
         double pid = controller.calculate(pozitie, target);
         double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
@@ -58,5 +59,6 @@ public class MainTeleOp extends OpMode {
         misumi.setPower(power);
         telemetry.addData("pos ", pozitie);
         telemetry.addData("target ", target); */
+
     }
 }
