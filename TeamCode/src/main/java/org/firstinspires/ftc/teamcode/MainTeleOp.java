@@ -39,7 +39,7 @@ public class MainTeleOp extends OpMode {
     public void loop() {
         robot.movement(gamepad1);
         robot.glisieragamepad(gamepad2, robot.Glisiera ,robot.Glisiera1);
-        robot.misumigamepad(gamepad1,robot.misumi);
+        robot.misumigamepad(gamepad1,robot.misumi,robot.Glisiera,robot.Glisiera1);
         if(gamepad2.b)//robot.intake();
             robot.active();
         if(gamepad2.y)robot.rotireintakes();
