@@ -28,6 +28,7 @@ public class hardwarePapiu {
     public Servo ClesteS;
     public Servo Intake1;
     public Servo Intake2;
+    public Servo faras;
     public DcMotorEx IntakeActive;
 
     public Servo ServoCleste;
@@ -36,7 +37,7 @@ public class hardwarePapiu {
     public static double down=0,little=3,low=20,middle=25,up=160;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
-    boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false,isOpenC=false;
+    boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false,isOpenC=false,isOpenF=false;
     int i=0;
 
 
@@ -60,9 +61,11 @@ public class hardwarePapiu {
         Intake1 = myOpMode.hardwareMap.get(Servo.class, "intake1");
         Intake2 = myOpMode.hardwareMap.get(Servo.class, "intake2");
        Cleste = myOpMode.hardwareMap.get(Servo.class, "cleste");
+       faras = myOpMode.hardwareMap.get(Servo.class, "faras");
         //Configurari
         Glisiera.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         Glisiera1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        faras.setPosition(0.5);
        Intake1.setPosition(0.9);
         Intake2.setPosition(0.1);
         ServoBrat.setPosition(0.97); //1
@@ -219,6 +222,20 @@ public class hardwarePapiu {
             else{ //pt inchis
                 Intake1.setPosition(0.9);
                 Intake2.setPosition(0.1);
+            }
+            TimeUnit.MILLISECONDS.sleep(150);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+    }
+    public void farasr(){
+        try {
+            isOpenF=!isOpenF;
+            if(isOpenF){ //pt deschis
+                faras.setPosition(0.93);
+            }
+            else{ //pt inchis
+                faras.setPosition(0.5);
             }
             TimeUnit.MILLISECONDS.sleep(150);
         } catch (InterruptedException e){

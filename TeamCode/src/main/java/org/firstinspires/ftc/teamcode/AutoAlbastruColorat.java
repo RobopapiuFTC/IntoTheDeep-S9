@@ -157,6 +157,33 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         }
 
     }
+    public class faras{
+        private Servo faras;
+        public faras(HardwareMap hardwareMap){faras = hardwareMap.get(Servo.class, "faras");}
+        public class farasout implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                faras.setPosition(0.85);
+
+                return false;
+            }
+        }
+        public Action farasout(){
+            return new faras.farasout();
+        }
+        public class farasin implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet){
+                faras.setPosition(0.5);
+
+                return false;
+            }
+        }
+        public Action farasin(){
+            return new faras.farasin();
+        }
+
+    }
     public class Target{
         public class target150 implements Action {
             @Override
@@ -264,13 +291,13 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         public class GlisieraSus implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                int ticks = (int)(35 * VariableStorage.TICKS_PER_CM_Z);
+                int ticks = (int)(130 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera.setPower(0.6);
+                glisiera.setPower(1);
                 glisiera1.setTargetPosition(-ticks);
                 glisiera1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera1.setPower(0.6);
+                glisiera1.setPower(1);
 
                 return false;
             }
@@ -284,10 +311,10 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                 int ticks = (int)(0 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera.setPower(0.6);
+                glisiera.setPower(1);
                 glisiera1.setTargetPosition(-ticks);
                 glisiera1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera1.setPower(0.6);
+                glisiera1.setPower(1);
 
                 return false;
             }
@@ -301,10 +328,10 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                 int ticks = (int)(20 * VariableStorage.TICKS_PER_CM_Z);
                 glisiera.setTargetPosition(-ticks);
                 glisiera.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera.setPower(0.6);
+                glisiera.setPower(1);
                 glisiera1.setTargetPosition(-ticks);
                 glisiera1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                glisiera1.setPower(0.6);
+                glisiera1.setPower(1);
                 return false;
             }
         }
@@ -370,6 +397,7 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         Active active = new Active(hardwareMap);
         Glisiera glisiera = new Glisiera(hardwareMap);
         Clestes clestes = new Clestes(hardwareMap);
+        faras faras = new faras(hardwareMap);
         VelConstraint baseVelConstraint= new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(50),
                 new AngularVelConstraint(Math.PI/2)
@@ -387,7 +415,7 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .stopAndAdd(glisiera.GlisieraSus())
-                        .waitSeconds(0.2)
+                        .waitSeconds(1.2)
                         .strafeTo(new Vector2d(7,-31))
                         .stopAndAdd(glisiera.GlisieraBara())
                         .waitSeconds(1)
@@ -395,30 +423,15 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                         .waitSeconds(0.2)
                         .stopAndAdd(glisiera.GlisieraJos())
                         .strafeToSplineHeading(new Vector2d(32,-50), Math.toRadians(30))
-                        .strafeToSplineHeading(new Vector2d(33,-33), Math.toRadians(30))
-                        .stopAndAdd(target.target150())
+                        .strafeToSplineHeading(new Vector2d(33,-22), Math.toRadians(30))
+                        .stopAndAdd(faras.farasout())
                         .waitSeconds(0.1)
-                        .stopAndAdd(intake.IntakeJosJos())
-                        .stopAndAdd(active.activeia())
-                        .waitSeconds(0.7)
-                        .stopAndAdd(intake.IntakeOut())
-                        .strafeToSplineHeading(new Vector2d(35,-45), Math.toRadians(300))
-                        .stopAndAdd(active.activescoate())
-                        .waitSeconds(0.7)
-                        .stopAndAdd(active.activeia())
-                        .strafeToSplineHeading(new Vector2d(41.5,-32), Math.toRadians(25))
-                        .stopAndAdd(intake.IntakeJosJos())
-                        .stopAndAdd(active.activeia())
-                        .waitSeconds(0.5)
-                        .stopAndAdd(intake.IntakeOut())
-                        .strafeToSplineHeading(new Vector2d(45,-45), Math.toRadians(300))
-                        .stopAndAdd(active.activescoate())
-                        .waitSeconds(0.7)
-                        .stopAndAdd(target.target0())
-                        .stopAndAdd(intake.IntakeOut())
-                        .stopAndAdd(active.activestop())
+                        .strafeToSplineHeading(new Vector2d(35,-55), Math.toRadians(270))
+                        .strafeToSplineHeading(new Vector2d(37,-22), Math.toRadians(35))
+                        .strafeToSplineHeading(new Vector2d(45,-55), Math.toRadians(270))
                         .strafeToSplineHeading(new Vector2d(35,-60), Math.toRadians(90))
                         .strafeToSplineHeading(new Vector2d(35,-66), Math.toRadians(90))
+                        .stopAndAdd(faras.farasin())
                         .stopAndAdd(clestes.clestestrans())
                         .waitSeconds(0.2)
                         .stopAndAdd(glisiera.GlisieraSus())
@@ -436,6 +449,18 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                         .stopAndAdd(glisiera.GlisieraSus())
                         .waitSeconds(0.3)
                         .strafeToSplineHeading(new Vector2d(-6,-31), Math.toRadians(270))
+                        .stopAndAdd(glisiera.GlisieraBara())
+                        .waitSeconds(1)
+                        .stopAndAdd(clestes.clestelasat())
+                        .waitSeconds(0.2)
+                        .stopAndAdd(glisiera.GlisieraJos())
+                        .strafeToSplineHeading(new Vector2d(35,-60), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(35,-65), Math.toRadians(90))
+                        .stopAndAdd(clestes.clestestrans())
+                        .waitSeconds(0.2)
+                        .stopAndAdd(glisiera.GlisieraSus())
+                        .waitSeconds(0.3)
+                        .strafeToSplineHeading(new Vector2d(-8,-30), Math.toRadians(270))
                         .stopAndAdd(glisiera.GlisieraBara())
                         .waitSeconds(1)
                         .stopAndAdd(clestes.clestelasat())
