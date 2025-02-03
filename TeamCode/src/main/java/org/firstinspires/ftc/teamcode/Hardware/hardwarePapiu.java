@@ -33,7 +33,7 @@ public class hardwarePapiu {
     public Servo ServoCleste;
     public Servo Cleste;
 
-    public static double down=0,little=3,low=20,middle=25,up=70;
+    public static double down=0,little=3,low=20,middle=25,up=160;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=15;
     boolean isOpenR=false, isOpen=true, isOpenI=true, isOpenRI=true,isOpenRR=false,isOpenA=false,isOpenC=false;
@@ -65,8 +65,8 @@ public class hardwarePapiu {
         Glisiera1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
        Intake1.setPosition(0.9);
         Intake2.setPosition(0.1);
-        ServoBrat.setPosition(1); //1
-        ServoBrat1.setPosition(0.); //0
+        ServoBrat.setPosition(0.97); //1
+        ServoBrat1.setPosition(0.03); //0
         Cleste.setPosition(0.47);
         ClesteS.setPosition(0.3);
         Glisiera.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -213,8 +213,8 @@ public class hardwarePapiu {
         try {
             isOpenI=!isOpenI;
             if(isOpenI){ //pt deschis
-                Intake1.setPosition(0.77);
-                Intake2.setPosition(0.23);
+                Intake1.setPosition(0.74);
+                Intake2.setPosition(0.26);
             }
             else{ //pt inchis
                 Intake1.setPosition(0.9);
@@ -233,8 +233,8 @@ public class hardwarePapiu {
                 ServoBrat1.setPosition(0.8);
             }
             else{ //pt inchis
-                ServoBrat.setPosition(1);
-                ServoBrat1.setPosition(0);
+                ServoBrat.setPosition(0.97);
+                ServoBrat1.setPosition(0.03);
             }
             TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){
@@ -361,7 +361,7 @@ public class hardwarePapiu {
         }
         if(gamepad1.dpad_down){
             miscaremisumi("down",Glisiera);
-            miscareglisiera("little",Glisiera1,Glisiera2);
+           // miscareglisiera("little",Glisiera1,Glisiera2);
         }
         if(gamepad1.dpad_right){
             miscaremisumi("low",Glisiera);
