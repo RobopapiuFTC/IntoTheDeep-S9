@@ -72,7 +72,6 @@ public class hardwarePapiu {
         ServoBrat1.setPosition(0.03); //0
         Cleste.setPosition(0.47);
         ClesteS.setPosition(0.3);
-        Glisiera.setDirection(DcMotorSimple.Direction.REVERSE);
         Glisiera1.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
