@@ -31,6 +31,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
     public static double f=0;
     public static int target=0;
     public final double ticks_in_degree=700/180.0;
+    public static Pose2d beginPose;
     public class Brat{
         private Servo ServoBrat;
         private Servo ServoBrat1;
@@ -41,7 +42,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class BratFata implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                ServoBrat.setPosition(0.2);
+                ServoBrat.setPosition(0.8);
                 ServoBrat1.setPosition(0.8);
 
                 return false;
@@ -53,7 +54,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class BratAuto implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                ServoBrat.setPosition(0.2);
+                ServoBrat.setPosition(0.8);
                 ServoBrat1.setPosition(0.8);
 
                 return false;
@@ -66,8 +67,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class BratJos implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                ServoBrat.setPosition(0.97); //1
-                ServoBrat1.setPosition(0.03);
+                ServoBrat.setPosition(0.19); //1
+                ServoBrat1.setPosition(0.19);
 
                 return false;
             }
@@ -85,7 +86,7 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class ClesteStrans implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                cleste.setPosition(0.3);
+                cleste.setPosition(0.25);
 
                 return false;
             }
@@ -112,8 +113,8 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class IntakeJos implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                intake1.setPosition(0.75);
-                intake2.setPosition(0.25);
+                intake1.setPosition(0.8);
+                intake2.setPosition(0.2);
 
                 return false;
             }
@@ -173,10 +174,10 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         public class target300 implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                int ticks = (int)(13 * VariableStorage.TICKS_PER_CM_Z);
+                int ticks = (int)(16 * VariableStorage.TICKS_PER_CM_Z);
                 misumi.setTargetPosition(-ticks);
                 misumi.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                misumi.setPower(0.5);
+                misumi.setPower(1);
                 return false;
             }
         }
@@ -305,46 +306,17 @@ public final class AutoAlbastruGalben extends LinearOpMode {
             return new Glisiera.GlisieraBaraJos();
         }
     }
-    public class Clestes{
-        private Servo clestes;
-        public Clestes(HardwareMap hardwareMap){
-            clestes = hardwareMap.get(Servo.class, "clestes");
-        }
-        public class ClesteStrans implements Action{
-            @Override
-            public boolean run(@NonNull TelemetryPacket packet){
-                clestes.setPosition(0.3);
-
-                return false;
-            }
-        }
-        public Action clestestrans(){
-            return new Clestes.ClesteStrans();
-        }
-        public class ClesteLasat implements Action{
-            @Override
-            public boolean run(@NonNull TelemetryPacket packet){
-                clestes.setPosition(0.5);
-
-                return false;
-            }
-        }
-        public Action clestelasat(){
-            return new Clestes.ClesteLasat();
-        }
-    }
     @Override
     public void runOpMode() throws InterruptedException {
         hardwarePapiu robot = new hardwarePapiu(this);
         robot.init();
-        Pose2d beginPose = new Pose2d(-32, -62.5, Math.toRadians(90));
+        beginPose = new Pose2d(-30, -60.5, Math.toRadians(0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Brat brat = new Brat(hardwareMap);
         Cleste cleste = new Cleste(hardwareMap);
         Intake intake=new Intake(hardwareMap);
         Active active = new Active(hardwareMap);
         Glisiera glisiera = new Glisiera(hardwareMap);
-        Clestes clestes = new Clestes(hardwareMap);
         misumi = hardwareMap.get(DcMotorEx.class , "misumi");
       /*  controller = new PIDController(p,i,d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -352,89 +324,94 @@ public final class AutoAlbastruGalben extends LinearOpMode {
         misumi.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         misumi.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         misumi.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        misumi.setDirection(DcMotorSimple.Direction.REVERSE);
         Target target=new Target();
         robot.init();
+        robot.ServoBrat.setPosition(0.2);
+        robot.ServoBrat1.setPosition(0.2);
         waitForStart();
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .stopAndAdd(clestes.clestelasat())
                         .stopAndAdd(cleste.clestestrans())
                         .waitSeconds(0.1)
                         .stopAndAdd(glisiera.GlisieraSus())
-                        .strafeToSplineHeading(new Vector2d(-32,-53), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-32,-53), Math.toRadians(0))
                         .waitSeconds(1.4)
-                        .strafeToSplineHeading(new Vector2d(-55,-51), Math.toRadians(45))
+                        .strafeToSplineHeading(new Vector2d(-59,-52), Math.toRadians(45)) //cos1
+                        .waitSeconds(0.1)
                         .stopAndAdd(brat.bratfata())
-                        .waitSeconds(0.8)
+                        .waitSeconds(0.6)
                         .stopAndAdd(cleste.clestelasat())
                         .waitSeconds(0.3)
                         .stopAndAdd(brat.bratjos())
                         .waitSeconds(0.5)
-                        .stopAndAdd(target.target150())
+                        .stopAndAdd(target.target300())
                         .stopAndAdd(glisiera.GlisieraJos())
-                        .strafeToSplineHeading(new Vector2d(-49.5,-42), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-49.5,-42), Math.toRadians(90)) //cub1
                         .stopAndAdd(active.activeia())
                         .stopAndAdd(intake.IntakeJos())
                         .strafeToSplineHeading(new Vector2d(-45,-38), Math.toRadians(90))
                         .stopAndAdd(intake.IntakeJosJos())
-                        .waitSeconds(1.5)
+                        .waitSeconds(1.2)
                         .stopAndAdd(intake.IntakeOut())
                         .waitSeconds(0.2)
                         .stopAndAdd(target.target0())
-                        .waitSeconds(0.3)
-                        .stopAndAdd(active.activestop())
+                        .waitSeconds(0.7)
                         .stopAndAdd(cleste.clestestrans())
                         .waitSeconds(0.1)
+                        .stopAndAdd(active.activestop())
                         .stopAndAdd(glisiera.GlisieraSus())
                         .waitSeconds(1.4)
-                        .strafeToSplineHeading(new Vector2d(-56,-50), Math.toRadians(45))
+                        .strafeToSplineHeading(new Vector2d(-55,-52), Math.toRadians(45)) //cos2
+                        .waitSeconds(0.1)
                         .stopAndAdd(brat.bratfata())
-                        .waitSeconds(0.8)
+                        .waitSeconds(0.6)
                         .stopAndAdd(cleste.clestelasat())
                         .waitSeconds(0.3)
                         .stopAndAdd(brat.bratjos())
                         .waitSeconds(0.5)
-                        .stopAndAdd(target.target150())
+                        .stopAndAdd(target.target300())
                         .stopAndAdd(glisiera.GlisieraJos())
-                        .strafeToSplineHeading(new Vector2d(-58,-43), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-60,-43.5), Math.toRadians(87)) //cub2
                         .stopAndAdd(active.activeia())
                         .stopAndAdd(intake.IntakeJos())
-                        .strafeToSplineHeading(new Vector2d(-54,-40.5), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-55,-41), Math.toRadians(90))
                         .stopAndAdd(intake.IntakeJosJos())
-                        .waitSeconds(1.5)
-                        .stopAndAdd(intake.IntakeOut())
-                        .stopAndAdd(target.target0())
-                        .waitSeconds(0.3)
-                        .stopAndAdd(active.activestop())
-                        .stopAndAdd(cleste.clestestrans())
-                        .waitSeconds(0.1)
-                        .stopAndAdd(glisiera.GlisieraSus())
-                        .waitSeconds(1.4)
-                        .strafeToSplineHeading(new Vector2d(-54.5,-52), Math.toRadians(45))
-                        .stopAndAdd(brat.bratfata())
-                        .waitSeconds(0.8)
-                        .stopAndAdd(cleste.clestelasat())
-                        .waitSeconds(0.3)
-                        .stopAndAdd(brat.bratjos())
-                        .waitSeconds(0.5)
-                        .stopAndAdd(target.target150())
-                        .stopAndAdd(glisiera.GlisieraJos())
-                        .strafeToSplineHeading(new Vector2d(-50,-22), Math.toRadians(180))
-                        .stopAndAdd(active.activeia())
-                        .stopAndAdd(intake.IntakeJos())
+                        .strafeToSplineHeading(new Vector2d(-58,-41), Math.toRadians(90))
                         .waitSeconds(1)
                         .stopAndAdd(intake.IntakeOut())
                         .stopAndAdd(target.target0())
-                        .waitSeconds(0.3)
-                        .stopAndAdd(active.activestop())
+                        .waitSeconds(0.6)
                         .stopAndAdd(cleste.clestestrans())
                         .waitSeconds(0.1)
+                        .stopAndAdd(active.activestop())
                         .stopAndAdd(glisiera.GlisieraSus())
                         .waitSeconds(1.4)
-                        .strafeToSplineHeading(new Vector2d(-53,-51), Math.toRadians(45))
+                        .strafeToSplineHeading(new Vector2d(-53,-52), Math.toRadians(45)) //cos3
+                        .waitSeconds(0.1)
                         .stopAndAdd(brat.bratfata())
-                        .waitSeconds(0.8)
+                        .waitSeconds(0.6)
+                        .stopAndAdd(cleste.clestelasat())
+                        .waitSeconds(0.3)
+                        .stopAndAdd(brat.bratjos())
+                        .waitSeconds(0.5)
+                        .stopAndAdd(target.target300())
+                        .stopAndAdd(glisiera.GlisieraJos())
+                        .strafeToSplineHeading(new Vector2d(-44.5,-18), Math.toRadians(180)) //cub3
+                        .stopAndAdd(active.activeia())
+                        .stopAndAdd(intake.IntakeJosJos())
+                        .waitSeconds(1)
+                        .stopAndAdd(intake.IntakeOut())
+                        .stopAndAdd(target.target0())
+                        .waitSeconds(0.6)
+                        .stopAndAdd(cleste.clestestrans())
+                        .waitSeconds(0.1)
+                        .stopAndAdd(active.activestop())
+                        .stopAndAdd(glisiera.GlisieraSus())
+                        .waitSeconds(1.4)
+                        .strafeToSplineHeading(new Vector2d(-49,-57), Math.toRadians(45)) //cos4
+                        .waitSeconds(0.1)
+                        .stopAndAdd(brat.bratfata())
+                        .waitSeconds(0.6)
                         .stopAndAdd(cleste.clestelasat())
                         .waitSeconds(0.3)
                         .stopAndAdd(brat.bratjos())
