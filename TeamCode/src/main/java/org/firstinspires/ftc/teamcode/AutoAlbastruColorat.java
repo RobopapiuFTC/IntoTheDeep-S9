@@ -106,7 +106,7 @@ public final class AutoAlbastruColorat extends LinearOpMode {
         public class ClesteLasat implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet){
-                cleste.setPosition(0.65);
+                cleste.setPosition(0.55);
 
                 return false;
             }
@@ -397,22 +397,22 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                         .stopAndAdd(brat.bratauto())
                         .stopAndAdd(glisiera.GlisieraJos())
                         .strafeToSplineHeading(new Vector2d(27,-50), Math.toRadians(90))
-                        .strafeToSplineHeading(new Vector2d(32,-31), Math.toRadians(35))//cub1
+                        .strafeToSplineHeading(new Vector2d(32,-30), Math.toRadians(25))//cub1
                         .stopAndAdd(active.activeia())
                         .stopAndAdd(target.target300())
                         .waitSeconds(0.3)
                         .stopAndAdd(intake.IntakeJosJos())
-                        .waitSeconds(0.7)
+                        .waitSeconds(0.5)
                         .stopAndAdd(intake.IntakeOut())
-                        .strafeToSplineHeading(new Vector2d(35,-45), Math.toRadians(285))
+                        .strafeToSplineHeading(new Vector2d(35,-49), Math.toRadians(285))
                         .stopAndAdd(active.activescoate())
                         .waitSeconds(0.3)
                         .stopAndAdd(active.activeia())
-                        .strafeToSplineHeading(new Vector2d(39.8,-33), Math.toRadians(25))//cub2
+                        .strafeToSplineHeading(new Vector2d(39,-31), Math.toRadians(25))//cub2
                         .stopAndAdd(intake.IntakeJosJos())
-                        .waitSeconds(0.7)
+                        .waitSeconds(0.5)
                         .stopAndAdd(intake.IntakeOut())
-                        .strafeToSplineHeading(new Vector2d(40,-45), Math.toRadians(285))
+                        .strafeToSplineHeading(new Vector2d(40,-47), Math.toRadians(285))
                         .stopAndAdd(active.activescoate())
                         .waitSeconds(0.3)
                         .stopAndAdd(active.activestop())
@@ -452,16 +452,16 @@ public final class AutoAlbastruColorat extends LinearOpMode {
                         .waitSeconds(0.1)
                         .strafeToSplineHeading(new Vector2d(35,-60), Math.toRadians(90))
                         .stopAndAdd(cleste.clestestrans())
-                        .waitSeconds(0.2)
+                        .waitSeconds(0.3)
                         .stopAndAdd(glisiera.GlisieraBaraJos())
                         .stopAndAdd(brat.bratjos())
                         .stopAndAdd(glisiera.GlisieraJos())
-                        .strafeToSplineHeading(new Vector2d(-16,-26), Math.toRadians(90))//bara4
+                        .strafeToSplineHeading(new Vector2d(-11,-26), Math.toRadians(90))//bara4
                         .stopAndAdd(glisiera.GlisieraBara())
                         .waitSeconds(0.9)
                         .stopAndAdd(cleste.clestelasat())
                         .stopAndAdd(glisiera.GlisieraJos())
-                        .strafeToSplineHeading(new Vector2d(-16,-40), Math.toRadians(90))
+                        .strafeToSplineHeading(new Vector2d(-11,-40), Math.toRadians(90))
                         .strafeToSplineHeading(new Vector2d(40,-50), Math.toRadians(90))//specimen4
                         .stopAndAdd(brat.bratfata())
                         .waitSeconds(0.1)

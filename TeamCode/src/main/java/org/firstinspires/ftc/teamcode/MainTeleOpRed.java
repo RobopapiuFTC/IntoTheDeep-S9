@@ -33,14 +33,18 @@ public class MainTeleOpRed extends OpMode {
         if(gamepad1.left_bumper)robot.farasr();
         if(gamepad2.b){
             robot.IntakeActive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.IntakeActive.setPower(1);
+            robot.IntakeActive.setPower(0.5);
         }
         if(gamepad1.b){
-            robot.ServoBrat.setPosition(0.45);
-            robot.ServoBrat1.setPosition(0.45);
+            robot.ServoBrat.setPosition(0.4);
+            robot.ServoBrat1.setPosition(0.4);
         }
         if(gamepad1.a)robot.bratspecimene();
         if(gamepad1.x)robot.clestespecimene();
+        if(gamepad2.a){
+            robot.IntakeActive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.IntakeActive.setPower(1);
+        }
         if(gamepad1.y)robot.rotireintakes();
         if(gamepad2.x)robot.cleste();
         if(gamepad2.left_bumper)robot.brat();
@@ -53,11 +57,10 @@ public class MainTeleOpRed extends OpMode {
                 robot.Intake1.setPosition(0.95);
                 robot.Intake2.setPosition(0.05);
                 robot.miscaremisumi("down", robot.misumi);
-                robot.isOpen = true;
                 robot.infata=false;
             } else if (red <= 500 && blue >= 500 && green <= 500) {
                 robot.IntakeActive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.IntakeActive.setPower(1);
+                robot.IntakeActive.setPower(0.5);
             }
         }
         telemetry.addData("red",red);

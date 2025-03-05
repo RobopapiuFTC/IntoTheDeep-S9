@@ -37,7 +37,7 @@ public class hardwarePapiu {
     public Servo ServoCleste;
     public Servo Cleste;
 
-    public static double down=0,little=3,low=40,middle=130,up=160;
+    public static double down=0,little=7,low=40,middle=75,up=160;
     public static double upr=60,middler=350;
     public static double downm=0,littlem=1,lowm=5,middlem=10,upm=21;
     public boolean isOpenR=true, isOpen=true, isOpenI=false, isOpenRI=false,isOpenRR=false,isOpenA=false,isOpenC=false,isOpenF=false;
@@ -77,7 +77,7 @@ public class hardwarePapiu {
         faras.setPosition(0.5);
        Intake1.setPosition(0.95);
         Intake2.setPosition(0.05);
-        Cleste.setPosition(0.47);
+        Cleste.setPosition(0.45);
       //  ClesteS.setPosition(0.26);
         Glisiera1.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -235,8 +235,8 @@ public class hardwarePapiu {
         try {
             isOpenI=!isOpenI;
             if(isOpenI){ //pt deschis
-                Intake1.setPosition(0.76);
-                Intake2.setPosition(0.24);
+                Intake1.setPosition(0.81);
+                Intake2.setPosition(0.19);
             }
             else{ //pt inchis
                 Intake1.setPosition(0.95);
@@ -314,12 +314,12 @@ public class hardwarePapiu {
         try {
             isOpen=!isOpen;
             if(isOpen){ //pt inchis
-                Cleste.setPosition(0.47);
+                Cleste.setPosition(0.45);
             }
             else{ //pt deschis
                 Cleste.setPosition(0.23);
             }
-            TimeUnit.MILLISECONDS.sleep(200);
+            TimeUnit.MILLISECONDS.sleep(300);
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
         }
